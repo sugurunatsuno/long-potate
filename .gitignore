@@ -1,0 +1,27 @@
+# .NET
+bin/
+obj/
+artifacts/
+TestResults/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# IDE
+.vs/
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# macOS
+.DS_Store
+
+# Generated export samples
+*.gtprint.local.json
+*.preview.png
+*.print.pdf
+
+# Logs
+*.log
