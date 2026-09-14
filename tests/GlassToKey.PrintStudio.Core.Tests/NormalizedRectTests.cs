@@ -6,7 +6,7 @@ namespace GlassToKey.PrintStudio.Core.Tests;
 public sealed class NormalizedRectTests
 {
     [Fact]
-    public void MirrorHorizontally_MirrorsPositionAndRotation()
+    public void MirrorHorizontallyMirrorsPositionAndRotation()
     {
         var source = new NormalizedRect(0.10, 0.20, 0.25, 0.30, -15.0);
 
