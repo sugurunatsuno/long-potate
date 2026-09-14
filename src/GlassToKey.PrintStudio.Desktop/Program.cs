@@ -1,5 +1,5 @@
 using Avalonia;
-using GlassToKey.PrintStudio.App;
+using PrintStudioApp = GlassToKey.PrintStudio.App.App;
 
 namespace GlassToKey.PrintStudio.Desktop;
 
@@ -9,6 +9,6 @@ internal static class Program
     public static void Main(string[] args) => BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 
     public static AppBuilder BuildAvaloniaApp() =>
-        AppBuilder.Configure<App>()
+        AppBuilder.Configure<PrintStudioApp>()
             .UsePlatformDetect();
 }

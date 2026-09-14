@@ -63,8 +63,13 @@ The geometry engine must not know anything about paper sizes, backgrounds, artwo
 ## Run the desktop app
 
 ```bash
-dotnet run --project src/GlassToKey.PrintStudio.Desktop/GlassToKey.PrintStudio.Desktop.csproj
+mise exec -- dotnet run --project src/GlassToKey.PrintStudio.Desktop/GlassToKey.PrintStudio.Desktop.csproj
 ```
+
+The desktop editor can open GlassToKey export JSON, select a layout and page
+size, choose a background image, adjust key colors and borders, and export
+SVG, PDF, or PNG print layouts. Project settings can be saved as
+`.gtprint.json`.
 
 The UI itself lives in the shared `GlassToKey.PrintStudio.App` project so Desktop and Browser hosts render the same Avalonia view.
 
@@ -75,9 +80,11 @@ A Browser/WASM host is included for development on a headless machine reachable 
 On the SSH host, install the workload once and start the UI:
 
 ```bash
-dotnet workload install wasm-tools
-./scripts/run-remote-ui.sh
+mise exec -- dotnet workload install wasm-tools
+mise exec -- ./scripts/run-remote-ui.sh
 ```
+
+The remote UI runs under `dotnet watch`; changes to C# or XAML trigger a rebuild and browser refresh when supported by the browser host.
 
 From the client machine, create a local port forward:
 

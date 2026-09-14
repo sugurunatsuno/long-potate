@@ -6,7 +6,11 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../../src/GlassToKey.PrintStudio.Core/GlassToKey.PrintStudio.Core.csproj" />
+    <ProjectReference Include="../../src/GlassToKey.PrintStudio.Rendering/GlassToKey.PrintStudio.Rendering.csproj" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit.v3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="../../GlassToKey-mac-settings.json" Link="GlassToKey-mac-settings.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

@@ -11,4 +11,5 @@ public partial class MainWindow : Window
         AvaloniaXamlLoader.Load(this);
         DataContext = new MainWindowViewModel();
     }
+
 }

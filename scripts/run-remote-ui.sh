@@ -21,6 +21,6 @@ echo "From your local machine, create the tunnel with:"
 echo "  ssh -L 5180:127.0.0.1:5180 <user>@<ssh-host>"
 echo "Then open http://127.0.0.1:5180 in your local browser."
 
-exec dotnet run \
+exec dotnet watch --non-interactive run \
   --project src/GlassToKey.PrintStudio.Browser/GlassToKey.PrintStudio.Browser.csproj \
   --launch-profile Remote

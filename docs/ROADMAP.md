@@ -9,24 +9,24 @@
 
 ## Milestone 1: Compatibility core
 
-- [ ] Outer export parser.
-- [ ] Nested KeymapJson parser.
-- [ ] Trackpad presets.
-- [ ] Column settings compatibility.
-- [ ] Conventional layout builder.
+- [x] Outer export parser.
+- [x] Nested KeymapJson parser.
+- [x] Trackpad presets.
+- [x] Column settings compatibility.
+- [x] Conventional layout builder.
 - [ ] Key geometry overrides.
-- [ ] Left-side mirror.
-- [ ] Custom buttons.
+- [x] Left-side mirror.
+- [x] Custom buttons.
 - [ ] Numeric regression fixtures.
 
 Exit condition: normalized geometry matches GlassToKey reference output.
 
 ## Milestone 2: Compatibility preview
 
-- [ ] Avalonia preview surface.
-- [ ] Grid keys and rotations.
-- [ ] Custom buttons.
-- [ ] Labels.
+- [x] Avalonia preview surface.
+- [x] Grid keys and rotations.
+- [x] Custom buttons.
+- [x] Labels.
 - [ ] 30 x 22 debug grid.
 - [ ] Zoom/pan.
 
@@ -36,25 +36,25 @@ Exit condition: reference screenshots can be compared meaningfully with GlassToK
 
 - [ ] Device-to-mm mapping.
 - [ ] Page model.
-- [ ] A4/A3/Letter/custom.
+- [x] A4/A3/Letter/custom.
 - [ ] Trackpad placement.
-- [ ] Background color.
-- [ ] PNG/JPEG artwork.
+- [x] Background color.
+- [x] PNG/JPEG artwork.
 - [ ] SVG artwork.
-- [ ] Key styling.
+- [x] Key styling.
 - [ ] Calibration guides.
 
 ## Milestone 4: Export
 
-- [ ] Editable SVG renderer.
-- [ ] PDF renderer.
-- [ ] PNG renderer.
+- [x] Editable SVG renderer.
+- [x] PDF renderer.
+- [x] PNG renderer.
 - [ ] DPI/resolution warnings.
 - [ ] Physical print verification.
 
 ## Milestone 5: Project editing
 
-- [ ] `.gtprint.json` project persistence.
+- [x] `.gtprint.json` project persistence.
 - [ ] Artwork inspector.
 - [ ] Theme presets.
 - [ ] Source JSON reload.

@@ -1,13 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk.WebAssembly">
   <PropertyGroup>
     <TargetFramework>net10.0-browser</TargetFramework>
+    <NoWarn>$(NoWarn);MSB3277</NoWarn>
     <OutputType>Exe</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <RootNamespace>GlassToKey.PrintStudio.Browser</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../GlassToKey.PrintStudio.App/GlassToKey.PrintStudio.App.csproj" />
+    <ProjectReference Include="../GlassToKey.PrintStudio.App/GlassToKey.PrintStudio.App.csproj" SetTargetFramework="TargetFramework=net10.0-browser" />
     <PackageReference Include="Avalonia.Browser" />
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="using:GlassToKey.PrintStudio.App.ViewModels"
+    xmlns:local="using:GlassToKey.PrintStudio.App"
     x:DataType="vm:MainWindowViewModel">
   <Grid ColumnDefinitions="280,*,280" RowDefinitions="Auto,*">
     <Border Grid.ColumnSpan="3" Padding="12,8" BorderThickness="0,0,0,1">
@@ -15,14 +16,41 @@
     <Border Grid.Row="1" Padding="12" BorderThickness="0,0,1,0">
       <StackPanel Spacing="8">
         <TextBlock FontWeight="SemiBold" Text="Document" />
-        <Button Content="Open GlassToKey export…" />
+        <Button Click="OpenExport" Content="Open GlassToKey export…" />
+        <Button Click="OpenProject" Content="Open project…" />
+        <Button Click="SaveProject" IsEnabled="{Binding HasExport}" Content="Save project…" />
         <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="Layout" />
-        <ComboBox IsEnabled="False" />
+        <ComboBox ItemsSource="{Binding Layouts}" SelectedItem="{Binding SelectedLayout}" />
         <TextBlock FontSize="11" Opacity="0.55" Text="Load a JSON export first" />
+        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="Page" />
+        <ComboBox ItemsSource="{Binding PageSizes}" SelectedItem="{Binding SelectedPageSize}" />
+        <TextBlock FontSize="11" Opacity="0.7" Text="Trackpad position (mm)" />
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="6">
+          <NumericUpDown Minimum="0" Maximum="500" Increment="1" FormatString="0.##" PlaceholderText="X" Value="{Binding TrackpadXmm}" />
+          <NumericUpDown Grid.Column="1" Minimum="0" Maximum="500" Increment="1" FormatString="0.##" PlaceholderText="Y" Value="{Binding TrackpadYmm}" />
+        </Grid>
         <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="Print" />
-        <Button IsEnabled="False" Content="Export SVG…" />
-        <Button IsEnabled="False" Content="Export PDF…" />
-        <Button IsEnabled="False" Content="Export PNG…" />
+        <Button Click="ExportSvg" IsEnabled="{Binding CanExport}" Content="Export SVG…" />
+        <Button Click="ExportPdf" IsEnabled="{Binding CanExport}" Content="Export PDF…" />
+        <Button Click="ExportPng" IsEnabled="{Binding CanExport}" Content="Export PNG…" />
+        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="Background" />
+        <Button Click="ChooseBackground" IsEnabled="{Binding HasExport}" Content="Choose image…" />
+        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="Key style" />
+        <TextBox PlaceholderText="Fill (#rrggbb)" Text="{Binding KeyFill}" />
+        <NumericUpDown Minimum="0" Maximum="1" Increment="0.05" FormatString="0.##" Value="{Binding KeyFillOpacity}" />
+        <TextBox PlaceholderText="Border (#rrggbb)" Text="{Binding KeyBorder}" />
+        <TextBox PlaceholderText="Text (#rrggbb)" Text="{Binding TextColor}" />
+        <NumericUpDown Minimum="0" Maximum="5" Increment="0.05" FormatString="0.##" Value="{Binding KeyBorderWidthMm}" />
+        <NumericUpDown Minimum="0" Maximum="10" Increment="0.25" FormatString="0.##" Value="{Binding KeyCornerRadiusMm}" />
+        <NumericUpDown Minimum="1" Maximum="20" Increment="0.25" FormatString="0.##" Value="{Binding KeyTextSizeMm}" />
+        <TextBox PlaceholderText="Font family" Text="{Binding KeyFontFamily}" />
+        <TextBlock FontSize="11" Opacity="0.7" Text="Background placement (mm / scale / degrees)" />
+        <NumericUpDown Minimum="-500" Maximum="500" Increment="1" FormatString="0.##" Value="{Binding BackgroundXmm}" />
+        <NumericUpDown Minimum="-500" Maximum="500" Increment="1" FormatString="0.##" Value="{Binding BackgroundYmm}" />
+        <NumericUpDown Minimum="0.01" Maximum="10" Increment="0.05" FormatString="0.##" Value="{Binding BackgroundScale}" />
+        <NumericUpDown Minimum="-360" Maximum="360" Increment="1" FormatString="0.##" Value="{Binding BackgroundRotationDegrees}" />
+        <CheckBox IsChecked="{Binding ShowBackgroundInKeymap}" Content="Show image inside keymap" />
+        <TextBox PlaceholderText="Page background (#rrggbb)" Text="{Binding PageBackground}" />
       </StackPanel>
     </Border>
 
@@ -35,8 +63,7 @@
           <Button Content="100%" />
         </StackPanel>
         <Border Grid.Row="1" Margin="0,12,0,0" BorderThickness="1" CornerRadius="6">
-          <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.55"
-                     Text="Compatibility preview will be implemented in Milestone 2." />
+          <local:PreviewCanvas x:Name="Preview" />
         </Border>
       </Grid>
     </Border>

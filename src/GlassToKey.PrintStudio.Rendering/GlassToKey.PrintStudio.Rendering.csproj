@@ -5,6 +5,7 @@
   <ItemGroup>
     <ProjectReference Include="../GlassToKey.PrintStudio.Core/GlassToKey.PrintStudio.Core.csproj" />
     <PackageReference Include="SkiaSharp" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" />
     <PackageReference Include="Svg.Skia" />
   </ItemGroup>
 </Project>

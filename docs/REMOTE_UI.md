@@ -9,14 +9,16 @@ This is intended for development-time visual inspection on a headless Linux host
 Install the .NET 10 SDK and the WebAssembly workload:
 
 ```bash
-dotnet workload install wasm-tools
+mise exec -- dotnet workload install wasm-tools
 ```
 
 Clone or update the repository, then start the remote UI from the repository root:
 
 ```bash
-./scripts/run-remote-ui.sh
+mise exec -- ./scripts/run-remote-ui.sh
 ```
+
+The script uses `dotnet watch`, so C# and XAML changes are rebuilt automatically. Keep the browser tab open while developing.
 
 The development server listens only on:
 
@@ -63,7 +65,7 @@ It does not prove desktop-native integration such as OS file pickers, native pri
 The normal desktop entry point is now:
 
 ```bash
-dotnet run --project src/GlassToKey.PrintStudio.Desktop/GlassToKey.PrintStudio.Desktop.csproj
+mise exec -- dotnet run --project src/GlassToKey.PrintStudio.Desktop/GlassToKey.PrintStudio.Desktop.csproj
 ```
 
 The shared UI project is `src/GlassToKey.PrintStudio.App`; it no longer owns the desktop executable entry point.
