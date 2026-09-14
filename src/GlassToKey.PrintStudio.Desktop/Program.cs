@@ -1,6 +1,7 @@
 using Avalonia;
+using GlassToKey.PrintStudio.App;
 
-namespace GlassToKey.PrintStudio.App;
+namespace GlassToKey.PrintStudio.Desktop;
 
 internal static class Program
 {

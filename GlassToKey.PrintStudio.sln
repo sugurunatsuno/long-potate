@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlassToKey.PrintStudio.Rend
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlassToKey.PrintStudio.App", "src\GlassToKey.PrintStudio.App\GlassToKey.PrintStudio.App.csproj", "{0ABA2A64-07AA-48C5-ADDF-F100F01F9EFA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlassToKey.PrintStudio.Desktop", "src\GlassToKey.PrintStudio.Desktop\GlassToKey.PrintStudio.Desktop.csproj", "{D5616D32-9E86-4A2A-BB71-4A20D45AC210}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlassToKey.PrintStudio.Core.Tests", "tests\GlassToKey.PrintStudio.Core.Tests\GlassToKey.PrintStudio.Core.Tests.csproj", "{F05858C6-EFB6-4299-ADC3-941BF69E6755}"
 EndProject
 Global
@@ -28,6 +30,10 @@ Global
 		{0ABA2A64-07AA-48C5-ADDF-F100F01F9EFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ABA2A64-07AA-48C5-ADDF-F100F01F9EFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ABA2A64-07AA-48C5-ADDF-F100F01F9EFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5616D32-9E86-4A2A-BB71-4A20D45AC210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5616D32-9E86-4A2A-BB71-4A20D45AC210}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5616D32-9E86-4A2A-BB71-4A20D45AC210}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5616D32-9E86-4A2A-BB71-4A20D45AC210}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F05858C6-EFB6-4299-ADC3-941BF69E6755}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F05858C6-EFB6-4299-ADC3-941BF69E6755}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F05858C6-EFB6-4299-ADC3-941BF69E6755}.Release|Any CPU.ActiveCfg = Release|Any CPU
