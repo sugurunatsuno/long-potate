@@ -1,0 +1,6 @@
+<Project>
+  <!-- Avoid Avalonia build telemetry writing outside the project during local builds. -->
+  <PropertyGroup>
+    <UsedAvaloniaProducts Condition="'$(CI)' != 'true'"> </UsedAvaloniaProducts>
+  </PropertyGroup>
+</Project>

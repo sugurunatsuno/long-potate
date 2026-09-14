@@ -34,4 +34,18 @@ public sealed class GlassToKeyExportParserTests
             Assert.InRange(key.Rect.Height, 0, 1);
         });
     }
+
+    [Fact]
+    public void KeepsRightPKeyInFiveByFourLayout()
+    {
+        var export = GlassToKeyExportParser.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "GlassToKey-mac-settings.json")));
+        Assert.Contains(LayoutBuilder.Build(export, "5x4"), key => key.MappingId == "right:1:4" && key.Label == "P");
+    }
+
+    [Fact]
+    public void AddsMissingPKeyToSixByThreeLayout()
+    {
+        var export = GlassToKeyExportParser.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "GlassToKey-mac-settings.json")));
+        Assert.Contains(LayoutBuilder.Build(export, "6x3"), key => key.MappingId == "right:0:4" && key.Label == "P");
+    }
 }

@@ -33,6 +33,15 @@ public partial class MainView : UserControl
         preview.SetPageBackground(viewModel.PageBackground);
         preview.SetBackgroundPlacement(viewModel.BackgroundXmm, viewModel.BackgroundYmm, viewModel.BackgroundScale, viewModel.BackgroundRotationDegrees);
         preview.SetBackgroundVisibility(viewModel.ShowBackgroundInKeymap);
+        preview.SetOtherLayerLabelsVisibility(viewModel.ShowOtherLayerLabels);
+        preview.SetSideBackground(viewModel.LeftBackgroundImagePath, viewModel.RightBackgroundImagePath);
+        preview.BackgroundPlacementChanged += (x, y, scale, rotation) =>
+        {
+            viewModel.BackgroundXmm = x;
+            viewModel.BackgroundYmm = y;
+            viewModel.BackgroundScale = scale;
+            viewModel.BackgroundRotationDegrees = rotation;
+        };
         viewModel.PropertyChanged += ViewModelPropertyChanged;
     }
 
@@ -44,10 +53,13 @@ public partial class MainView : UserControl
         if (e.PropertyName == nameof(MainWindowViewModel.PreviewKeys)) preview.SetKeys(viewModel.PreviewKeys);
         if (e.PropertyName == nameof(MainWindowViewModel.PreviewButtons)) preview.SetButtons(viewModel.PreviewButtons);
         if (e.PropertyName == nameof(MainWindowViewModel.BackgroundImagePath)) preview.SetBackground(viewModel.BackgroundImagePath);
+        if (e.PropertyName is nameof(MainWindowViewModel.LeftBackgroundImagePath) or nameof(MainWindowViewModel.RightBackgroundImagePath))
+            preview.SetSideBackground(viewModel.LeftBackgroundImagePath, viewModel.RightBackgroundImagePath);
         if (e.PropertyName is nameof(MainWindowViewModel.BackgroundXmm) or nameof(MainWindowViewModel.BackgroundYmm)
             or nameof(MainWindowViewModel.BackgroundScale) or nameof(MainWindowViewModel.BackgroundRotationDegrees))
             preview.SetBackgroundPlacement(viewModel.BackgroundXmm, viewModel.BackgroundYmm, viewModel.BackgroundScale, viewModel.BackgroundRotationDegrees);
         if (e.PropertyName == nameof(MainWindowViewModel.ShowBackgroundInKeymap)) preview.SetBackgroundVisibility(viewModel.ShowBackgroundInKeymap);
+        if (e.PropertyName == nameof(MainWindowViewModel.ShowOtherLayerLabels)) preview.SetOtherLayerLabelsVisibility(viewModel.ShowOtherLayerLabels);
         if (e.PropertyName is nameof(MainWindowViewModel.KeyFill) or nameof(MainWindowViewModel.KeyBorder) or nameof(MainWindowViewModel.TextColor)
             or nameof(MainWindowViewModel.KeyCornerRadiusMm) or nameof(MainWindowViewModel.KeyTextSizeMm) or nameof(MainWindowViewModel.KeyFontFamily)
             or nameof(MainWindowViewModel.KeyFillOpacity))
@@ -57,6 +69,19 @@ public partial class MainView : UserControl
 
     private TopLevel TopLevel => Avalonia.Controls.TopLevel.GetTopLevel(this)
         ?? throw new InvalidOperationException("The view is not attached to a top-level window.");
+
+    private PreviewCanvas PreviewCanvasControl => this.FindControl<PreviewCanvas>("Preview")
+        ?? throw new InvalidOperationException("Preview is not ready.");
+
+    private void ShowCompatibility(object? sender, Avalonia.Interactivity.RoutedEventArgs e) => PreviewCanvasControl.SetCompatibilityMode(true);
+    private void ShowPrint(object? sender, Avalonia.Interactivity.RoutedEventArgs e) => PreviewCanvasControl.SetCompatibilityMode(false);
+    private void FitTrackpad(object? sender, Avalonia.Interactivity.RoutedEventArgs e) => PreviewCanvasControl.FitTrackpad();
+    private void Set100Percent(object? sender, Avalonia.Interactivity.RoutedEventArgs e) => PreviewCanvasControl.Set100Percent();
+    private void FitBackground(object? sender, Avalonia.Interactivity.RoutedEventArgs e) => PreviewCanvasControl.FitBackground();
+    private void ToggleDebugGrid(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        if (sender is CheckBox checkBox) PreviewCanvasControl.SetDebugGrid(checkBox.IsChecked == true);
+    }
 
     private async void OpenExport(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
@@ -81,6 +106,11 @@ public partial class MainView : UserControl
             if (files.Count == 1) ViewModel.LoadProject(files[0].Path.LocalPath);
         }
         catch (Exception exception) { ViewModel.ShowError(exception); }
+    }
+
+    private void ReloadSource(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        try { ViewModel.ReloadSource(); } catch (Exception exception) { ViewModel.ShowError(exception); }
     }
 
     private async void SaveProject(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -109,7 +139,8 @@ public partial class MainView : UserControl
                 buffer.Position = 0;
                 preview.SetBackground(buffer);
 #else
-                ViewModel.SetBackgroundImage(files[0].Path.LocalPath);
+                var side = (sender as Avalonia.Controls.Button)?.Tag is string tag && int.TryParse(tag, out var parsed) ? parsed : -1;
+                ViewModel.SetBackgroundImage(files[0].Path.LocalPath, side);
 #endif
             }
         }

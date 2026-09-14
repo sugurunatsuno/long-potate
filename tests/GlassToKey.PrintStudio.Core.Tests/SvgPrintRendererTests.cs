@@ -48,4 +48,28 @@ public sealed class SvgPrintRendererTests
 
         Assert.Contains("data:image/png;base64,", svg);
     }
+
+    [Fact]
+    public void RendersCustomPageAndCalibrationMarks()
+    {
+        var export = GlassToKeyExportParser.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "GlassToKey-mac-settings.json")));
+        var svg = SvgPrintRenderer.Render(export, new SvgPrintOptions(PageWidthMm: 180, PageHeightMm: 240, ShowCalibration: true));
+
+        Assert.Contains("width=\"180mm\"", svg);
+        Assert.Contains("height=\"240mm\"", svg);
+        Assert.Contains("id=\"calibration\"", svg);
+        Assert.Contains("10 mm", svg);
+        Assert.Contains("50 mm", svg);
+        Assert.Contains("100%", svg);
+    }
+
+    [Fact]
+    public void WarnsWhenRasterResolutionIsBelowRequestedDpi()
+    {
+        var image = Path.Combine(Path.GetTempPath(), "glass-to-key-low-resolution.png");
+        File.WriteAllBytes(image, Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="));
+
+        Assert.NotNull(RasterPrintRenderer.GetResolutionWarning(image, 160, 300));
+        Assert.Null(RasterPrintRenderer.GetResolutionWarning(image, 0.01, 1));
+    }
 }

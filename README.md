@@ -73,6 +73,26 @@ SVG, PDF, or PNG print layouts. Project settings can be saved as
 
 The UI itself lives in the shared `GlassToKey.PrintStudio.App` project so Desktop and Browser hosts render the same Avalonia view.
 
+## CLI batch export
+
+The CLI can export one JSON file or every JSON file in a folder without opening the GUI:
+
+```bash
+mise exec -- dotnet run --project src/GlassToKey.PrintStudio.Cli/GlassToKey.PrintStudio.Cli.csproj -- input.json output.svg svg 6x4
+mise exec -- dotnet run --project src/GlassToKey.PrintStudio.Cli/GlassToKey.PrintStudio.Cli.csproj -- ./json-files ./output png 6x4 all
+```
+
+The last argument selects a layer number, or `all` to create one output file per layer.
+
+## Physical print verification
+
+Enable `印刷校正マークを表示` before exporting PDF. Print at 100% with any
+printer option equivalent to `Actual size` / `Do not scale`. Measure the 10 mm
+square and the 50 mm / 100 mm bars with a ruler; accept the print only when
+each measurement is within ±0.2 mm. Then place the device outline over the
+Magic Trackpad and adjust `Trackpad X/Y (mm)` if the printer has a consistent
+offset.
+
 ## Remote UI over SSH
 
 A Browser/WASM host is included for development on a headless machine reachable only by SSH.

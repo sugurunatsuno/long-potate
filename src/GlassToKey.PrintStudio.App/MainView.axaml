@@ -14,53 +14,74 @@
     </Border>
 
     <Border Grid.Row="1" Padding="12" BorderThickness="0,0,1,0">
-      <StackPanel Spacing="8">
-        <TextBlock FontWeight="SemiBold" Text="Document" />
-        <Button Click="OpenExport" Content="Open GlassToKey export…" />
-        <Button Click="OpenProject" Content="Open project…" />
-        <Button Click="SaveProject" IsEnabled="{Binding HasExport}" Content="Save project…" />
-        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="Layout" />
+      <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="8">
+        <TextBlock FontWeight="SemiBold" Text="ドキュメント" />
+        <Button Click="OpenExport" Content="GlassToKey書き出しを開く…" />
+        <Button Click="OpenProject" Content="プロジェクトを開く…" />
+        <Button Click="ReloadSource" IsEnabled="{Binding HasExport}" Content="元JSONを再読み込み" />
+        <Button Click="SaveProject" IsEnabled="{Binding HasExport}" Content="プロジェクトを保存…" />
+        <ComboBox ItemsSource="{Binding RecentFiles}" SelectedValue="{Binding SelectedRecentFile}" />
+        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="レイアウト" />
         <ComboBox ItemsSource="{Binding Layouts}" SelectedItem="{Binding SelectedLayout}" />
-        <TextBlock FontSize="11" Opacity="0.55" Text="Load a JSON export first" />
-        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="Page" />
+        <TextBlock FontSize="11" Opacity="0.7" Text="レイヤー" />
+        <ComboBox ItemsSource="{Binding Layers}" SelectedItem="{Binding SelectedLayer}" />
+        <TextBlock FontSize="11" Opacity="0.55" Text="先にJSONを書き出してください" />
+        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="用紙" />
         <ComboBox ItemsSource="{Binding PageSizes}" SelectedItem="{Binding SelectedPageSize}" />
-        <TextBlock FontSize="11" Opacity="0.7" Text="Trackpad position (mm)" />
+        <TextBlock FontSize="11" Opacity="0.7" Text="カスタム用紙サイズ (mm)" />
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="6">
+          <NumericUpDown Minimum="50" Maximum="1000" Increment="1" FormatString="0.##" PlaceholderText="幅" Value="{Binding CustomPageWidthMm}" />
+          <NumericUpDown Grid.Column="1" Minimum="50" Maximum="1000" Increment="1" FormatString="0.##" PlaceholderText="高さ" Value="{Binding CustomPageHeightMm}" />
+        </Grid>
+        <TextBlock FontSize="11" Opacity="0.7" Text="トラックパッドの位置 (mm)" />
         <Grid ColumnDefinitions="*,*" ColumnSpacing="6">
           <NumericUpDown Minimum="0" Maximum="500" Increment="1" FormatString="0.##" PlaceholderText="X" Value="{Binding TrackpadXmm}" />
           <NumericUpDown Grid.Column="1" Minimum="0" Maximum="500" Increment="1" FormatString="0.##" PlaceholderText="Y" Value="{Binding TrackpadYmm}" />
         </Grid>
-        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="Print" />
-        <Button Click="ExportSvg" IsEnabled="{Binding CanExport}" Content="Export SVG…" />
-        <Button Click="ExportPdf" IsEnabled="{Binding CanExport}" Content="Export PDF…" />
-        <Button Click="ExportPng" IsEnabled="{Binding CanExport}" Content="Export PNG…" />
-        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="Background" />
-        <Button Click="ChooseBackground" IsEnabled="{Binding HasExport}" Content="Choose image…" />
-        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="Key style" />
-        <TextBox PlaceholderText="Fill (#rrggbb)" Text="{Binding KeyFill}" />
+        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="印刷・書き出し" />
+        <Button Click="ExportSvg" IsEnabled="{Binding CanExport}" Content="SVGを書き出す…" />
+        <Button Click="ExportPdf" IsEnabled="{Binding CanExport}" Content="PDFを書き出す…" />
+        <Button Click="ExportPng" IsEnabled="{Binding CanExport}" Content="PNGを書き出す…" />
+        <ComboBox ItemsSource="{Binding PngDpiOptions}" SelectedItem="{Binding PngDpi}">
+          <ComboBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding StringFormat='{}{0} DPI'}" /></DataTemplate></ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="背景画像" />
+        <Button Click="ChooseBackground" Tag="1" IsEnabled="{Binding HasExport}" Content="右側の背景画像を選択…" />
+        <Button Click="ChooseBackground" Tag="0" IsEnabled="{Binding HasExport}" Content="左側の背景画像を選択…" />
+        <Button Click="FitBackground" IsEnabled="{Binding HasExport}" Content="背景をトラックパッドに合わせる" />
+        <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="キーのスタイル" />
+        <ComboBox ItemsSource="{Binding ThemePresets}" SelectedItem="{Binding SelectedTheme}" />
+        <TextBox PlaceholderText="塗りつぶし (#rrggbb)" Text="{Binding KeyFill}" />
         <NumericUpDown Minimum="0" Maximum="1" Increment="0.05" FormatString="0.##" Value="{Binding KeyFillOpacity}" />
-        <TextBox PlaceholderText="Border (#rrggbb)" Text="{Binding KeyBorder}" />
-        <TextBox PlaceholderText="Text (#rrggbb)" Text="{Binding TextColor}" />
+        <TextBox PlaceholderText="境界線 (#rrggbb)" Text="{Binding KeyBorder}" />
+        <TextBox PlaceholderText="文字 (#rrggbb)" Text="{Binding TextColor}" />
         <NumericUpDown Minimum="0" Maximum="5" Increment="0.05" FormatString="0.##" Value="{Binding KeyBorderWidthMm}" />
         <NumericUpDown Minimum="0" Maximum="10" Increment="0.25" FormatString="0.##" Value="{Binding KeyCornerRadiusMm}" />
         <NumericUpDown Minimum="1" Maximum="20" Increment="0.25" FormatString="0.##" Value="{Binding KeyTextSizeMm}" />
-        <TextBox PlaceholderText="Font family" Text="{Binding KeyFontFamily}" />
-        <TextBlock FontSize="11" Opacity="0.7" Text="Background placement (mm / scale / degrees)" />
+        <TextBox PlaceholderText="フォント名" Text="{Binding KeyFontFamily}" />
+        <TextBlock FontSize="11" Opacity="0.7" Text="背景画像の配置 (mm / 倍率 / 角度)" />
         <NumericUpDown Minimum="-500" Maximum="500" Increment="1" FormatString="0.##" Value="{Binding BackgroundXmm}" />
         <NumericUpDown Minimum="-500" Maximum="500" Increment="1" FormatString="0.##" Value="{Binding BackgroundYmm}" />
         <NumericUpDown Minimum="0.01" Maximum="10" Increment="0.05" FormatString="0.##" Value="{Binding BackgroundScale}" />
         <NumericUpDown Minimum="-360" Maximum="360" Increment="1" FormatString="0.##" Value="{Binding BackgroundRotationDegrees}" />
-        <CheckBox IsChecked="{Binding ShowBackgroundInKeymap}" Content="Show image inside keymap" />
-        <TextBox PlaceholderText="Page background (#rrggbb)" Text="{Binding PageBackground}" />
-      </StackPanel>
+        <CheckBox IsChecked="{Binding ShowBackgroundInKeymap}" Content="キー配置内に画像を表示" />
+        <CheckBox Click="ToggleDebugGrid" Content="30×22デバッググリッドを表示" />
+        <TextBox PlaceholderText="ページ背景 (#rrggbb)" Text="{Binding PageBackground}" />
+        <CheckBox IsChecked="{Binding ShowCalibration}" Content="印刷校正マークを表示" />
+        <TextBlock FontSize="11" Opacity="0.7" TextWrapping="Wrap"
+                   Text="画像: ドラッグで移動、ホイールで拡大縮小、Shift+ホイールで回転、ダブルクリックで初期化。表示: Ctrl+ホイールでズーム、中ボタンドラッグでパン" />
+        </StackPanel>
+      </ScrollViewer>
     </Border>
 
     <Border Grid.Row="1" Grid.Column="1" Padding="16">
       <Grid RowDefinitions="Auto,*">
         <StackPanel Orientation="Horizontal" Spacing="8">
-          <Button Content="Compatibility" />
-          <Button Content="Print" />
-          <Button Content="Fit Trackpad" />
-          <Button Content="100%" />
+          <Button Click="ShowCompatibility" Content="互換表示" />
+          <Button Click="ShowPrint" Content="印刷表示" />
+          <Button Click="FitTrackpad" Content="トラックパッドに合わせる" />
+          <Button Click="Set100Percent" Content="100%" />
         </StackPanel>
         <Border Grid.Row="1" Margin="0,12,0,0" BorderThickness="1" CornerRadius="6">
           <local:PreviewCanvas x:Name="Preview" />
@@ -70,9 +91,15 @@
 
     <Border Grid.Row="1" Grid.Column="2" Padding="12" BorderThickness="1,0,0,0">
       <StackPanel Spacing="8">
-        <TextBlock FontWeight="SemiBold" Text="Inspector" />
+        <TextBlock FontWeight="SemiBold" Text="インスペクター" />
         <TextBlock Opacity="0.6" TextWrapping="Wrap"
-                   Text="Select artwork or another print presentation object to edit its physical position, size, rotation and opacity." />
+                   Text="アートワークなどの印刷オブジェクトを選択すると、位置・サイズ・回転・不透明度を編集できます。" />
+        <TextBlock Text="背景画像" />
+        <NumericUpDown Minimum="-500" Maximum="500" Value="{Binding BackgroundXmm}" />
+        <NumericUpDown Minimum="-500" Maximum="500" Value="{Binding BackgroundYmm}" />
+        <NumericUpDown Minimum="0.01" Maximum="10" Value="{Binding BackgroundScale}" />
+        <NumericUpDown Minimum="-360" Maximum="360" Value="{Binding BackgroundRotationDegrees}" />
+        <NumericUpDown Minimum="0" Maximum="1" Increment="0.05" Value="{Binding BackgroundOpacity}" />
       </StackPanel>
     </Border>
   </Grid>

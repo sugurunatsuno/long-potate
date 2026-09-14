@@ -27,38 +27,38 @@ Exit condition: normalized geometry matches GlassToKey reference output.
 - [x] Grid keys and rotations.
 - [x] Custom buttons.
 - [x] Labels.
-- [ ] 30 x 22 debug grid.
-- [ ] Zoom/pan.
+- [x] 30 x 22 debug grid.
+- [x] Zoom/pan.
 
 Exit condition: reference screenshots can be compared meaningfully with GlassToKey Config view.
 
 ## Milestone 3: Print scene
 
-- [ ] Device-to-mm mapping.
-- [ ] Page model.
+- [x] Device-to-mm mapping.
+- [x] Page model.
 - [x] A4/A3/Letter/custom.
-- [ ] Trackpad placement.
+- [x] Trackpad placement.
 - [x] Background color.
 - [x] PNG/JPEG artwork.
-- [ ] SVG artwork.
+- [x] SVG artwork.
 - [x] Key styling.
-- [ ] Calibration guides.
+- [x] Calibration guides.
 
 ## Milestone 4: Export
 
 - [x] Editable SVG renderer.
 - [x] PDF renderer.
 - [x] PNG renderer.
-- [ ] DPI/resolution warnings.
+- [x] DPI/resolution warnings.
 - [ ] Physical print verification.
 
 ## Milestone 5: Project editing
 
 - [x] `.gtprint.json` project persistence.
-- [ ] Artwork inspector.
-- [ ] Theme presets.
-- [ ] Source JSON reload.
-- [ ] Recent files.
+- [x] Artwork inspector.
+- [x] Theme presets.
+- [x] Source JSON reload.
+- [x] Recent files.
 
 ## Later
 
